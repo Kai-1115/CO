@@ -1,4 +1,4 @@
-// ID
+// ID: 113550021
 module Decoder( 
 	instr_op_i, 
 	ALUOp_o, 
@@ -12,96 +12,89 @@ module Decoder(
 );
      
 // TO DO
-input	[5:0] instr_op_i;
+input [5:0] instr_op_i;
 
-output reg [1:0] ALU_op_o, RegDst_o, MemtoReg_o, Branch_o;
-output reg ALUSrc_o, RegWrite_o, MemRead_o, MemWrite_o;
+output reg [1:0] ALUOp_o;
+output reg ALUSrc_o, RegWrite_o, RegDst_o, Branch_o, MemRead_o, MemWrite_o, MemtoReg_o;
 
 always@(*)begin
 	case (instr_op_i)
 		6'b000000: // R 
 		begin 
-			ALU_op_o 	<= 2'b10;
+			ALUOp_o 	<= 2'b00;
 			ALUSrc_o 	<= 1'b0;
-			RegDst_o 	<= 2'b01;
+			RegDst_o 	<= 1'b1;
 			RegWrite_o 	<= 1'b1;
-			Branch_o 	<= 2'b00;
-			Jump_o 		<= 1'b0;
+			Branch_o 	<= 1'b0;
 			MemRead_o 	<= 1'b0;
 			MemWrite_o 	<= 1'b0;
-			MemtoReg_o 	<= 2'b00;
+			MemtoReg_o 	<= 1'b0;
 		end
 		6'b001001: // addi
 		begin 
-			ALU_op_o 	<= 2'b00;
+			ALUOp_o 	<= 2'b01;
 			ALUSrc_o 	<= 1'b1;
-			RegDst_o 	<= 2'b00;
+			RegDst_o 	<= 1'b0;
 			RegWrite_o 	<= 1'b1;
-			Branch_o 	<= 2'b00;
-			Jump_o 		<= 1'b0;
+			Branch_o 	<= 1'b0;
 			MemRead_o 	<= 1'b0;
 			MemWrite_o 	<= 1'b0;
-			MemtoReg_o 	<= 2'b00;
+			MemtoReg_o 	<= 1'b0;
 		end
 		6'b101100: // lw 
 		begin 
-			ALU_op_o 	<= 2'b00;
+			ALUOp_o 	<= 2'b01;
 			ALUSrc_o 	<= 1'b1;
-			RegDst_o 	<= 2'b00;
+			RegDst_o 	<= 1'b0;
 			RegWrite_o 	<= 1'b1;
-			Branch_o 	<= 2'b00;
-			Jump_o 		<= 1'b0;
+			Branch_o 	<= 1'b0;
 			MemRead_o 	<= 1'b1;
 			MemWrite_o 	<= 1'b0;
-			MemtoReg_o 	<= 2'b01;
+			MemtoReg_o 	<= 1'b1;
 		end
 		6'b100100: // sw 
 		begin 
-			ALU_op_o 	<= 2'b00;
+			ALUOp_o 	<= 2'b01;
 			ALUSrc_o 	<= 1'b1;
-			// RegDst_o don't care;	
+			// RegDst_o don't care
 			RegWrite_o 	<= 1'b0;
-			Branch_o 	<= 2'b00;
-			Jump_o 		<= 1'b0;
+			Branch_o 	<= 1'b0;
 			MemRead_o 	<= 1'b0;
 			MemWrite_o 	<= 1'b1;
-			// MemtoReg_o don't care;
+			// MemtoReg_o don't care
 		end
 		6'b000110: // beq 
 		begin
-			ALU_op_o 	<= 2'b01;
+			ALUOp_o 	<= 2'b10;
 			ALUSrc_o 	<= 1'b0;
-			// RegDst_o don't care;	   
-			RegWrite_o 	<= 1'b0;	   
-			Branch_o 	<= 2'b01;
-			Jump_o 		<= 1'b0;
+			// RegDst_o don't care
+			RegWrite_o 	<= 1'b0;
+			Branch_o 	<= 1'b1;
 			MemRead_o 	<= 1'b0;
 			MemWrite_o 	<= 1'b0;
-			// MemtoReg_o don't care;
+			// MemtoReg_o don't care
 		end
 		6'b000101: // bne 
 		begin
-			ALU_op_o 	<= 2'b01;
+			ALUOp_o 	<= 2'b11;
 			ALUSrc_o 	<= 1'b0;
-			// RegDst_o don't care;	   
-			RegWrite_o 	<= 1'b0;	   
-			Branch_o 	<= 2'b10;
-			Jump_o 		<= 1'b0;
+			// RegDst_o don't care
+			RegWrite_o 	<= 1'b0;
+			Branch_o 	<= 1'b1;
 			MemRead_o 	<= 1'b0;
 			MemWrite_o 	<= 1'b0;
-			// MemtoReg_o don't care;
+			// MemtoReg_o don't care
 		end
 		default:  
 		begin
-			ALU_op_o 	<= 2'b00;
+			ALUOp_o 	<= 2'b00;
 			ALUSrc_o 	<= 1'b0;
-			RegDst_o 	<= 2'b00;
-			RegWrite_o 	<= 1'b0;	
-			Branch_o 	<= 2'b00;
-			Jump_o 		<= 1'b0;
+			RegDst_o 	<= 1'b0;
+			RegWrite_o 	<= 1'b0;
+			Branch_o 	<= 1'b0;
 			MemRead_o 	<= 1'b0;
 			MemWrite_o 	<= 1'b0;
-			MemtoReg_o 	<= 2'b00;
+			MemtoReg_o 	<= 1'b0;
 		end
 	endcase
 end

@@ -6,16 +6,15 @@ module ALU_Ctrl(
 );
           
 // TO DO
-input      [5:0] funct_i;
-input      [1:0] ALUOp_i;
-
+input [5:0] funct_i;
+input [1:0] ALUOp_i;
 output reg [3:0] ALUCtrl_o;
 
-always @(*) begin
+always @(*) 
+begin
     ALUCtrl_o = 4'b1111;
-
     case(ALUOp_i)
-        2'b10: // R 
+        2'b00: // R 
         begin
             case (funct_i)
                 6'b100011: // add 
@@ -32,11 +31,13 @@ always @(*) begin
                     ALUCtrl_o = 4'b0101;
             endcase
         end
-        2'b00: // lw, sw, addi => add
+        2'b01: // lw, sw, addi => add
             ALUCtrl_o = 4'b0000;
-        2'b01: // beq, bne => sub 
+        2'b10: // beq => sub
+            ALUCtrl_o = 4'b0001;
+        2'b11: // bne => sub
             ALUCtrl_o = 4'b0001;
     endcase
-end  
+end
 
 endmodule
